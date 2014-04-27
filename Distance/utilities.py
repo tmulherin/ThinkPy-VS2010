@@ -1,13 +1,13 @@
 #!c:\python\python
 
-def util_formatNumber(value, number_of_decimal_places = 0, commas_desired = 0):
+def formatNumber(value, number_of_decimal_places = 0, commas_desired = 0):
 
     #==> Check that the numeric inputs are valid
-    if not util_isNumber(value):
+    if not isNumber(value):
         return "Error: " + str(value) + " is not a number"
-    if not util_isNumber(number_of_decimal_places):
+    if not isNumber(number_of_decimal_places):
         return "Error: " + str(number_of_decimal_places) + " is not a number"
-    if not util_isNumber(commas_desired):
+    if not isNumber(commas_desired):
         return "Error: commas = " + str("'" + commas_desired + "'") + "? commas must be either 0 (No) or not 0 (Yes)"
 
 #-------------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ def util_formatNumber(value, number_of_decimal_places = 0, commas_desired = 0):
     integer_part    = ""
     fractional_part = ""
 
-    dec_loc = util_inStr(number, ".")
+    dec_loc = inStr(number, ".")
     print("dec_loc = " + str(dec_loc))
 
 
@@ -46,7 +46,7 @@ def util_formatNumber(value, number_of_decimal_places = 0, commas_desired = 0):
         if fracts_to_keep[-1] != '9': #--> only round if last keeper is less than 9
             fracts_to_round = fractional_part[diff:]
             if len(fracts_to_round) > 1:
-                fracts_to_round = util_roundFractionalsToOne(fracts_to_round)
+                fracts_to_round = roundFractionalsToOne(fracts_to_round)
             if int(fracts_to_round) > 4:
                 fracts_to_keep = str(int(fracts_to_keep) + 1)
 
@@ -54,7 +54,7 @@ def util_formatNumber(value, number_of_decimal_places = 0, commas_desired = 0):
 
     if i_dec_places == 0:
         if len(fractional_part) > 0:
-            test_dec = util_roundFractionalsToOne(fractional_part)
+            test_dec = roundFractionalsToOne(fractional_part)
             #print("n = " + number, "t =" + test_dec, "i = " + integer_part, "f =" + fractional_part)
             if int(test_dec) > 4: integer_part = str(int(integer_part) + 1)
         number = integer_part
@@ -62,7 +62,7 @@ def util_formatNumber(value, number_of_decimal_places = 0, commas_desired = 0):
     if i_commas:
         integer_part = "0"
         fractional_part = "0"
-        dec_loc = util_inStr(number, ".")
+        dec_loc = inStr(number, ".")
 
         if dec_loc == -1:
             integer_part = number
@@ -77,14 +77,14 @@ def util_formatNumber(value, number_of_decimal_places = 0, commas_desired = 0):
             commad = ""
             templist = list(integer_part)
             templist.reverse()
-            integer_part = util_listToString(templist)
+            integer_part = listToString(templist)
             while len(integer_part) > 3:
                 commad += integer_part[0:3] + ','
                 integer_part = integer_part[3:]
             commad += integer_part
             templist = list(commad)
             templist.reverse()
-            integer_part = util_listToString(templist)
+            integer_part = listToString(templist)
 
         if dec_loc == -1:
             number = integer_part
@@ -93,14 +93,14 @@ def util_formatNumber(value, number_of_decimal_places = 0, commas_desired = 0):
 
     return number    
 
-def util_IsInt(value):
-    if util_isNumber(value):
+def IsInt(value):
+    if isNumber(value):
         if float(value) % int(value) == 0.0:
             return 1
 
     return 0
 
-def util_isNumber(string):
+def isNumber(string):
 
     string = str(string) #-> Just in case...
     decimal_counter = 0
@@ -115,7 +115,7 @@ def util_isNumber(string):
 
     return 1
 
-def util_inStr(string, substring):
+def inStr(string, substring):
     "Reminder: the caller must check for a return value of -1 (not found)"
     loc = -1 #--> Because Python starts counting at zero, search_string
 #                 could be at the zeroth position.  Bah!
@@ -131,7 +131,7 @@ def util_inStr(string, substring):
 
     return -1 # substring not in string
 
-def util_roundFractionalsToOne(fractionals):
+def roundFractionalsToOne(fractionals):
     fractionals = str(fractionals)
     if len(fractionals) > 1:
         if int(fractionals[0]) < 9:
@@ -145,7 +145,7 @@ def util_roundFractionalsToOne(fractionals):
 
     return fractionals
 
-def util_listToString(some_list):
+def listToString(some_list):
     retVal = ""
     for char in some_list:
         retVal += str(char)

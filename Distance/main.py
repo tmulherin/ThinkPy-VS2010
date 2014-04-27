@@ -50,7 +50,7 @@ def GetRate():
     while not got_rate:
         rate = input(prompt_info + prompt_rate)
         if len(rate) > 0:
-            if utilities.util_isNumber(rate):
+            if utilities.isNumber(rate):
                 return float(rate)
             else:
                 print(rate + " is not a valid rate of speed.  Press any key to continue.")
@@ -101,7 +101,7 @@ def GetTime():
         if len(hours) == 0:
             got_time = 1 
         else:
-            if utilities.util_isNumber(hours):
+            if utilities.isNumber(hours):
                 got_time = 1
                 thisTime = int(hours)*60*60
             else:
@@ -114,7 +114,7 @@ def GetTime():
         if len(minutes) == 0:
             got_time = 1
         else:
-            if utilities.util_isNumber(minutes):
+            if utilities.isNumber(minutes):
                 got_time = 1
                 thisTime += int(minutes)*60
             else:
@@ -127,7 +127,7 @@ def GetTime():
         if len(seconds) == 0:
             got_time = 1
         else:
-            if utilities.util_isNumber(seconds):
+            if utilities.isNumber(seconds):
                 got_time = 1
                 thisTime += int(seconds)
             else:
@@ -187,14 +187,14 @@ def SolutionForDistance():
 
     output_line = ["?", "?", "?"] #--> Distance = Rate * Time
     rate = GetRate()
-    output_line[1] = utilities.util_formatNumber(rate, 2, 1)
+    output_line[1] = utilities.formatNumber(rate, 2, 1)
 
     PopScreen(title_distance, output_line)
 
     #Get_Time()
     #Calculate distance
     time = GetTime()
-    output_line[2] = utilities.util_formatNumber(float(time)/60/60, 2, 1)
+    output_line[2] = utilities.formatNumber(float(time)/60/60, 2, 1)
     PopScreen(title_distance, output_line)
     input(prompt_info)
 
