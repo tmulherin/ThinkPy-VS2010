@@ -25,5 +25,11 @@
   <ItemGroup>
     <Content Include="thinkpython.pdf" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Distance\utilities.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Distance\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
