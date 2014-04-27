@@ -24,7 +24,7 @@ prompt_hours = "For how many hours was the activity pursued? "
 prompt_minutes = "For how many minutes was the activity pursued? "
 prompt_seconds = "For how many seconds was the activity pursued? "
 prompt_info = "--> "
-prompt_cont = "/nPress [Enter] to contimue"
+prompt_cont = "\nPress [Enter] to contimue"
 result_set = []
 
 title_distance = "  :" + " " * 29 + "<<< Distance >>>" + " " * 29 + ":"
@@ -63,17 +63,16 @@ def GetSolutionType():
     tries = 0
     prompt = "Are you looking for [d]istance, [r]ate or [t]ime? \n  > "
 
-    err_msg = " is not a valid 'distance = rate * time' problem.  "
+    err_msg = " is not a valid Distance problem.  "
 
 
     fail_msg = "\n\n\n" + " "*30 + "Three strikes you're out!"
-
-    while tries < 4:
+    strikes = ['One', 'Two', 'Three']
+    while tries < 3:
         tries += 1
         cls()
         for i in range(30): print()
-        dummyProc(i)
-
+ 
         sol_type = input(prompt)
 
         if len(sol_type) > 0:
@@ -82,12 +81,15 @@ def GetSolutionType():
             elif sol_type.lower() in("d", "r", "t"):
                 return sol_type.lower()
             else:
-                sol_type = "\n" + sol_type + " " + err_msg
-                
+                err = "\n" + "'" + sol_type + "'" + " " + err_msg
+                err += "That's Strike " + strikes[tries - 1]
+                if tries < 3:
+                    err = input(err + '\n' + prompt_cont)
+                else:
+                    err = input(err + " --> You're Out" )
         else:
             return 0 #empty input = quit
 
-    tries = input(fail_msg)
     return 0
 
 def GetTime():
