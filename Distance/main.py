@@ -195,6 +195,7 @@ def SolutionForDistance():
     #Calculate distance
     time = GetTime()
     output_line[2] = utilities.formatNumber(float(time)/60/60, 2, 1)
+    output_line[0] = utilities.formatNumber(float(rate * time)/60/60, 2, 1)
     PopScreen(title_distance, output_line)
     input(prompt_info)
 
