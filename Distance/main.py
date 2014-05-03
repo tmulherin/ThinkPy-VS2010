@@ -9,16 +9,11 @@ cd D:\__Dev\Python\ThinkPy
 cd /D/__Dev/Python/ThinkPy
 
 """
-import PopScreen
+import display
 import utilities    
 import os
 
 #from decimal import Decimal
-
-line_blank = "  :" + ' '*74 + ":"
-line_dashed = "  :" + '-'*74 + ":"
-
-pad = ' '*19
 
 prompt_distance = "How far was the activity pursued? "
 prompt_rate = "At what speed was the activity pursued? "
@@ -27,32 +22,26 @@ prompt_minutes = "For how many minutes was the activity pursued? "
 prompt_seconds = "For how many seconds was the activity pursued? "
 prompt_info = "--> "
 prompt_cont = "\nPress [Enter] to contimue"
-result_set = []
-
-title_distance = "  :" + " " * 22 + "<<< Distance = Rate X Time >>>" + " " * 22 + ":"
-title_rate = "  :" + " " * 22 + "<<< Rate = Distance / Time >>>" + " " * 22 + ":  "
-title_time = "  :" + " " * 22 + "<<< Time = Distance / Rate >>>" + " " * 22 + ":  "
-title_cols = "  :" + " " * 12 + "Distance" + " " * 16 + "Rate" + " "* 16 + "Time" + " " * 14 + ":"
-title_seps = "  :" + " " * 12 + "--------" + " " * 16 + "----" + " "* 16 + "----" + " " * 14 + ":"
+newValue
 
 distance = 0.0
 rate = 0.0
 time = 0.0
 
-def cls():
-    os.system("cls")
-#    print("\x1B[2J")
+def initialize():
+    new_values = ['?', '?', '?']
+    result_set = []
 
 def dummyProc(something):
     pass
     
-def GetRate():
+def get_rate():
     got_rate = 0
 
     while not got_rate:
         rate = input(prompt_info + prompt_rate)
         if len(rate) > 0:
-            if utilities.isNumber(rate):
+            if utilities.is_number(rate):
                 return float(rate)
             else:
                 print(rate + " is not a valid rate of speed.  Press any key to continue.")
@@ -60,7 +49,7 @@ def GetRate():
         else:
             print("You must enter a valid number")
 
-def GetSolutionType():
+def get_solution_type():
 
     tries = 0
     prompt = "Are you looking for [d]istance, [r]ate or [t]ime? \n  > "
@@ -72,7 +61,7 @@ def GetSolutionType():
     strikes = ['One', 'Two', 'Three']
     while tries < 3:
         tries += 1
-        cls()
+        display.clear_screen()
         for i in range(30): print()
  
         sol_type = input(prompt)
@@ -94,7 +83,7 @@ def GetSolutionType():
 
     return 0
 
-def GetTime():
+def get_time():
 
     got_time = 0
     thisTime = 0
@@ -103,7 +92,7 @@ def GetTime():
         if len(hours) == 0:
             got_time = 1 
         else:
-            if utilities.isNumber(hours):
+            if utilities.is_number(hours):
                 got_time = 1
                 thisTime = int(hours)*60*60
             else:
@@ -116,7 +105,7 @@ def GetTime():
         if len(minutes) == 0:
             got_time = 1
         else:
-            if utilities.isNumber(minutes):
+            if utilities.is_number(minutes):
                 got_time = 1
                 thisTime += int(minutes)*60
             else:
@@ -129,7 +118,7 @@ def GetTime():
         if len(seconds) == 0:
             got_time = 1
         else:
-            if utilities.isNumber(seconds):
+            if utilities.is_number(seconds):
                 got_time = 1
                 thisTime += int(seconds)
             else:
@@ -140,87 +129,48 @@ def GetTime():
              
     return thisTime # = Total seconds
   
-def PopScreen(title, output_line = []):
-    cls()
-    print()
-    print(line_dashed)
-    print(line_blank)
-    print(title)
-    print(line_blank)
-    print(line_dashed)
-    print(line_blank)
-    print(title_cols)
-    print(title_seps)
-#   print("  :          1         2        3")
-#   Print("  :0123456789012345678901234567890")
-
-#############    trips = 0   
-
-
-    # ==> Populate the matrix with the calculated info
-    for i in result_set: # result_set is a list of lists...
-        disp = (pad + str(i[0])[:14])
-        disp += (pad + str(i[1])[:14])
-        disp += (pad + str(i[2])[:14])
-        disp += " "*14
-        print("  :" + disp + ":")
-
-    #==> Populate the matrix with the info we're working on:
-    if len(output_line) > 0:
-        disp = (pad + str(output_line[0]))[len(output_line[0]) - 1:]
-        disp += (pad + str(output_line[1]))[len(str(output_line[1])) - 1:]
-        disp += (pad + str(output_line[2]))[len(str(output_line[2])) - 1:]
-        disp += " " * 14
-        print("  :" + disp + ":")
-
-    for i in range(29-len(result_set)):
-        print(line_blank)
-
-    print(line_dashed)
-    print()
-
-def SolutionForDistance():
+def solution_for_distance():
     '''
         output_line[0] = distance
         output_line[1] = rate
         output_line[2] = time
     '''
-    PopScreen(title_distance)
+    display.pop_screen(title_distance)
 
     output_line = ["?", "?", "?"] #--> Distance = Rate * Time
-    rate = GetRate()
-    output_line[1] = utilities.formatNumber(rate, 2, 1)
+    rate = get_rate()
+    output_line[1] = utilities.format_number(rate, 2, 1)
 
-    PopScreen(title_distance, output_line)
+    pop_screen(title_distance, output_line)
 
     #Get_Time()
     #Calculate distance
-    time = GetTime()
-    output_line[2] = utilities.formatNumber(float(time)/60/60, 2, 1)
-    output_line[0] = utilities.formatNumber(float(rate * time)/60/60, 2, 1)
-    PopScreen(title_distance, output_line)
+    time = get_time()
+    output_line[2] = utilities.format_number(float(time)/60/60, 2, 1)
+    output_line[0] = utilities.format_number(float(rate * time)/60/60, 2, 1)
+    display.pop_screen(title_distance, output_line)
     input(prompt_info)
 
-def SolutionForRate():
-    PopScreen(title_rate)
+def solution_for_rate():
+    display.pop_screen(title_rate)
 
-def SolutionForTime():
-    PopScreen(title_time)
+def solution_for_time():
+    display.pop_screen(title_time)
 
-def SolveProblem(sol_type):
+def solve_problem(sol_type):
 
     if sol_type == "d":
-        SolutionForDistance()
+        solution_for_distance()
     elif sol_type == "r":
-        SolutionForRate()
+        solution_for_rate()
     elif sol_type == "t":
-        SolutionForTime()
+        solution_for_time()
     else:
-        cls()
+        clear_screen()
         quit()
 
 def main():
-    SolveProblem(GetSolutionType())
+    solve_problem(get_solution_type())
 
 if __name__ == '__main__':
     main()
