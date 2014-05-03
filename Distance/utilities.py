@@ -1,5 +1,7 @@
 #!c:\python\python
 
+import PopScreen
+
 def formatNumber(value, number_of_decimal_places = 0, commas_desired = 0):
 
     #==> Check that the numeric inputs are valid

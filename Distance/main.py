@@ -9,8 +9,10 @@ cd D:\__Dev\Python\ThinkPy
 cd /D/__Dev/Python/ThinkPy
 
 """
+import PopScreen
 import utilities    
 import os
+
 #from decimal import Decimal
 
 line_blank = "  :" + ' '*74 + ":"
@@ -27,9 +29,9 @@ prompt_info = "--> "
 prompt_cont = "\nPress [Enter] to contimue"
 result_set = []
 
-title_distance = "  :" + " " * 29 + "<<< Distance >>>" + " " * 29 + ":"
-title_rate = "  :" + " " * 31 + "<<< Rate >>>" + " " * 31 + ":  "
-title_time = "  :" + " " * 31 + "<<< Time >>>" + " " * 31 + ":  "
+title_distance = "  :" + " " * 22 + "<<< Distance = Rate X Time >>>" + " " * 22 + ":"
+title_rate = "  :" + " " * 22 + "<<< Rate = Distance / Time >>>" + " " * 22 + ":  "
+title_time = "  :" + " " * 22 + "<<< Time = Distance / Rate >>>" + " " * 22 + ":  "
 title_cols = "  :" + " " * 12 + "Distance" + " " * 16 + "Rate" + " "* 16 + "Time" + " " * 14 + ":"
 title_seps = "  :" + " " * 12 + "--------" + " " * 16 + "----" + " "* 16 + "----" + " " * 14 + ":"
 

@@ -26,6 +26,7 @@
     <Content Include="thinkpython.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Distance\PopScreen.py" />
     <Compile Include="Distance\utilities.py" />
   </ItemGroup>
   <ItemGroup>
