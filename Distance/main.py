@@ -22,15 +22,14 @@ prompt_minutes = "For how many minutes was the activity pursued? "
 prompt_seconds = "For how many seconds was the activity pursued? "
 prompt_info = "--> "
 prompt_cont = "\nPress [Enter] to contimue"
-newValue
 
+sol_type = ''
 distance = 0.0
 rate = 0.0
 time = 0.0
 
-def initialize():
-    new_values = ['?', '?', '?']
-    result_set = []
+new_values = ['?', '?', '?']
+result_set = []
 
 def dummyProc(something):
     pass
@@ -135,20 +134,21 @@ def solution_for_distance():
         output_line[1] = rate
         output_line[2] = time
     '''
-    display.pop_screen(title_distance)
+    result_set.append(new_values)
+    display.pop_screen(sol_type, result_set)
 
-    output_line = ["?", "?", "?"] #--> Distance = Rate * Time
     rate = get_rate()
-    output_line[1] = utilities.format_number(rate, 2, 1)
+    result_set[-1][1] = utilities.format_number(rate, 2, 1)
 
-    pop_screen(title_distance, output_line)
+    display.pop_screen(sol_type, result_set)
 
     #Get_Time()
     #Calculate distance
     time = get_time()
-    output_line[2] = utilities.format_number(float(time)/60/60, 2, 1)
-    output_line[0] = utilities.format_number(float(rate * time)/60/60, 2, 1)
-    display.pop_screen(title_distance, output_line)
+    result_set[-1][2] = utilities.format_number(float(time)/60/60, 2, 1)
+    result_set[-1][0] = utilities.format_number(float(rate * time)/60/60, 2, 1)
+    
+    display.pop_screen(sol_type, result_set)
     input(prompt_info)
 
 def solution_for_rate():
