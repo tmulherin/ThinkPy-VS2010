@@ -23,7 +23,6 @@ prompt_seconds = "For how many seconds was the activity pursued? "
 prompt_info = "--> "
 prompt_cont = "\nPress [Enter] to contimue"
 
-sol_type = ''
 distance = 0.0
 rate = 0.0
 time = 0.0
@@ -52,26 +51,24 @@ def get_solution_type():
 
     tries = 0
     prompt = "Are you looking for [d]istance, [r]ate or [t]ime? \n  > "
-
     err_msg = " is not a valid Distance problem.  "
 
 
     fail_msg = "\n\n\n" + " "*30 + "Three strikes you're out!"
     strikes = ['One', 'Two', 'Three']
     while tries < 3:
-        tries += 1
         display.clear_screen()
+        tries += 1
         for i in range(30): print()
  
-        sol_type = input(prompt)
-
-        if len(sol_type) > 0:
-            if sol_type.lower() in("distance", "rate", "time"):
-                return sol_type[0].lower()
-            elif sol_type.lower() in("d", "r", "t"):
-                return sol_type.lower()
+        sol = input(prompt)
+        if len(sol) > 0:
+            if sol.lower() in("distance", "rate", "time"):
+                return sol[0].lower()
+            elif sol.lower() in("d", "r", "t"):
+                return sol.lower()
             else:
-                err = "\n" + "'" + sol_type + "'" + " " + err_msg
+                err = "\n" + "'" + sol + "'" + " " + err_msg
                 err += "That's Strike " + strikes[tries - 1]
                 if tries < 3:
                     err = input(err + '\n' + prompt_cont)
@@ -135,20 +132,19 @@ def solution_for_distance():
         output_line[2] = time
     '''
     result_set.append(new_values)
-    display.pop_screen(sol_type, result_set)
+    display.pop_screen('d', result_set)
 
     rate = get_rate()
     result_set[-1][1] = utilities.format_number(rate, 2, 1)
 
-    display.pop_screen(sol_type, result_set)
+    display.pop_screen('d', result_set)
 
     #Get_Time()
     #Calculate distance
     time = get_time()
     result_set[-1][2] = utilities.format_number(float(time)/60/60, 2, 1)
     result_set[-1][0] = utilities.format_number(float(rate * time)/60/60, 2, 1)
-    
-    display.pop_screen(sol_type, result_set)
+    display.pop_screen('d', result_set)
     input(prompt_info)
 
 def solution_for_rate():
@@ -157,8 +153,9 @@ def solution_for_rate():
 def solution_for_time():
     display.pop_screen(title_time)
 
-def solve_problem(sol_type):
-
+def main():
+    done = False
+    sol_type = (get_solution_type())
     if sol_type == "d":
         solution_for_distance()
     elif sol_type == "r":
@@ -166,11 +163,8 @@ def solve_problem(sol_type):
     elif sol_type == "t":
         solution_for_time()
     else:
-        clear_screen()
+        display.clear_screen()
         quit()
-
-def main():
-    solve_problem(get_solution_type())
 
 if __name__ == '__main__':
     main()
