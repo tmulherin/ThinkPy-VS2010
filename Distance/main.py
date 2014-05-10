@@ -41,7 +41,6 @@ def get_distance():
             return float(distance)
         else:
             print("You must enter a valid rate.  Press any key to continue.")
-
     
 def get_rate():
     got_rate = 0
@@ -181,8 +180,29 @@ def solution_for_rate():
     
     display.pop_screen('r', result_set)
     input(prompt_info)
+
 def solution_for_time():
-    display.pop_screen(title_time)
+    '''
+        output_line[0] = distance
+        output_line[1] = rate
+        output_line[2] = time
+    '''
+    result_set.append(new_values)
+    display.pop_screen('t', result_set)
+
+    distance = get_distance()
+    result_set[-1][0] = utilities.format_number(distance, 2, 1)
+
+    display.pop_screen('t', result_set)
+    
+    rate = get_rate()
+    result_set[-1][1] = utilities.format_number(float(rate), 2, 1)
+    
+    #==> Here's the meat:
+    result_set[-1][2] = utilities.format_number(float(distance / rate), 2, 1)
+    
+    display.pop_screen('t', result_set)
+    input(prompt_info)
 
 def main():
     done = False
