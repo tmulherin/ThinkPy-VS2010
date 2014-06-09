@@ -1,18 +1,26 @@
 #!c:\python\python
 
+import round
+import os
+import parse_time
+
+def clearScreen():
+    os.system("cls")
+
 def format_number(value, number_of_decimal_places = 0, commas_desired = 0):
 
     #==> Check that the numeric inputs are valid
-    if not is_number(value):
+    if not isNumeric(value):
         return "Error: " + str(value) + " is not a number"
-    if not is_number(number_of_decimal_places):
+    if not isNumeric(number_of_decimal_places):
         return "Error: " + str(number_of_decimal_places) + " is not a number"
-    if not is_number(commas_desired):
+    if not isNumeric(commas_desired):
         return "Error: commas = " + str("'" + commas_desired + "'") + "? commas must be either 0 (No) or not 0 (Yes)"
 
 #-------------------------------------------------------------------------------------------------
 
     i_dec_places    = int(number_of_decimal_places)
+
     i_commas        = int(commas_desired)
 
     number          = str(value)
@@ -20,12 +28,12 @@ def format_number(value, number_of_decimal_places = 0, commas_desired = 0):
     integer_part    = ""
     fractional_part = ""
 
-    dec_loc = in_string(number, ".")
-    print("dec_loc = " + str(dec_loc))
-
+    dec_loc = inString(number, ".")
+#    print("dec_loc = " + str(dec_loc))
 
     if dec_loc == -1:
         integer_part = number
+        fractional_part = '0'
     elif dec_loc == 0:
         integer_part = "0"
         fractional_part = number[1:]
@@ -33,46 +41,11 @@ def format_number(value, number_of_decimal_places = 0, commas_desired = 0):
         integer_part    = number[:dec_loc]
         fractional_part = number[dec_loc + 1:]
 
-    print("i_dec_places = " + str(i_dec_places))
-
-#-------------------------------------------------------------------------------------------------
-
-    diff = i_dec_places - len(fractional_part)
-
-    if i_dec_places > 0 and diff > -1: number += '0' * diff
-
-    if i_dec_places > 0 and diff < 0:
-        fracts_to_keep = fractional_part[:diff]
-        if fracts_to_keep[-1] != '9': #--> only round if last keeper is less than 9
-            fracts_to_round = fractional_part[diff:]
-            if len(fracts_to_round) > 1:
-                fracts_to_round = round_fractionals_to_one(fracts_to_round)
-            if int(fracts_to_round) > 4:
-                fracts_to_keep = str(int(fracts_to_keep) + 1)
-
-        number = (integer_part + '.' + fracts_to_keep)
-
-    if i_dec_places == 0:
-        if len(fractional_part) > 0:
-            test_dec = round_fractionals_to_one(fractional_part)
-            #print("n = " + number, "t =" + test_dec, "i = " + integer_part, "f =" + fractional_part)
-            if int(test_dec) > 4: integer_part = str(int(integer_part) + 1)
-        number = integer_part
-
+    number = round.rounder(i_dec_places, integer_part, fractional_part)
+    integer_part = number[0]
+    fractional_part = number[1]
+#------------------------------------------------------------------------ Have to make this reflect integers ------------------------
     if i_commas:
-        integer_part = "0"
-        fractional_part = "0"
-        dec_loc = in_string(number, ".")
-
-        if dec_loc == -1:
-            integer_part = number
-        elif dec_loc == 0:
-            integer_part = "0"
-            fractional_part = number[1:]
-        else:
-            integer_part = number[:dec_loc]
-            fractional_part = number[dec_loc + 1:]
-
         if len(integer_part) > 3:
             commad = ""
             templist = list(integer_part)
@@ -93,30 +66,23 @@ def format_number(value, number_of_decimal_places = 0, commas_desired = 0):
 
     return number    
 
-def is_int(value):
-    if is_number(value):
-        if float(value) % int(value) == 0.0:
-            return 1
+def getopts(argv):
+    opts = []
+    argv = argv[1:] #-> Strip out the first element: /home/tim/dev/ProgPy4/03_ScriptExec/testargv.py'
+    while len(argv) > 0:
+        if argv[0][0] == '-':
+            opts.append(argv[0])
+        if len(argv) > 1:
+            argv = argv[1:]
+        else: argv = []
+      
+    return opts
 
-    return 0
-
-def is_number(string):
-
-    string = str(string) #-> Just in case...
-    decimal_counter = 0
-
-    for char in string:
-        if char == ".":
-            decimal_counter += 1
-            if decimal_counter > 1:
-                return 0
-        elif char not in ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"):
-            return 0
-
-    return 1
-
-def in_string(string, substring):
-    "Reminder: the caller must check for a return value of -1 (not found)"
+def inString(string, substring):
+    """
+        Returns -1 if the substring was not found
+        else it returns the position of the substring 
+    """
     loc = -1 #--> Because Python starts counting at zero, search_string
 #                 could be at the zeroth position.  Bah!
 
@@ -131,19 +97,30 @@ def in_string(string, substring):
 
     return -1 # substring not in string
 
-def round_fractionals_to_one(fractionals):
-    fractionals = str(fractionals)
-    if len(fractionals) > 1:
-        if int(fractionals[0]) < 9:
-            while len(fractionals) > 2:
-                lastDigit = int(fractionals[-1])
-                if lastDigit > 4:
-                    fractionals = str(int(fractionals) + 10 - lastDigit)
-                fractionals = fractionals[:len(fractionals) - 1]
-            if int(fractionals[0]) < 9 and int(fractionals[1]) < 4:
-                fractionals = int(fractionals[0]) + 1
+def isInt(value):
+    try:
+        aString = str(value)
+        if (type(eval(aString)) is int) is True:
+            return True
+        else: return False
+    except:
+        return False
 
-    return fractionals
+def isFloat(value):
+    try:
+        aString = str(value)
+        if (type(eval(aString)) is float) is True:
+            return True
+        else: return False
+    except:
+        return False
+
+def isNumeric(value):
+
+    aString = str(value) #-> Just in case...
+    if isInt(aString) or isFloat(aString):
+        return True
+    else: return False
 
 def list_to_string(some_list):
     retVal = ""
@@ -152,5 +129,123 @@ def list_to_string(some_list):
 
     return retVal
 
+def parseTime(time_string, sep = ':'):
+    """
+    String should be in the form of (days:hours:minutes:seconds)
+    This reverses the string so that seconds are evaluated first
+        followed by minutes then hours, etc until the strings length is 
+        reduced to 0.      
+    """
+    seconds = 0.0
+    string = reverseString(time_string)    #-> Reversed string sss:mmm:hhh:ddd:yyy
+
+    #==> get seconds
+    trial = stripString(string, sep)
+    if __name__ == '__main__': print("Seconds = " + trial[1])
+    if isNumeric(trial[1]):
+        seconds += float(trial[1])
+        if not trial[2] is None:
+    #==> get minutes
+            trial = stripString(trial[2], sep)
+            if __name__ == '__main__': print("Minutes = " + trial[1])
+            if isNumeric(trial[1]):
+                seconds += float(trial[1]) * 60.0 
+                if not trial[2] is None:
+    #--> get hours
+                    trial = stripString(trial[2], sep)
+                    if __name__ == '__main__': print("Hours   = " + trial[1])
+                    if isNumeric(trial[1]):
+                        seconds += float(trial[1]) * 60.0 * 60.0
+    #--> get days
+                        if not trial[2] is None:
+                            trial = stripString(trial[2], sep)
+                            if __name__ == '__main__': print("Days    = " + trial[1])
+                            if isNumeric(trial[1]):
+                                seconds += float(trial[1]) * 24.0 * 60.0 * 60.0
+                            else: return ("Error   = '%s' is not a valid number of days!" % str(trial[1]))
+                    else: return ("Error   = '%s' is not a valid number of hours!" % str(trial[1]))
+            else: return ("Error   = '%s' is not a valid number of minutes!" % str(trial[1]))
+    else: return ("Error   = '%s' is not a valid number of seconds!" % str(trial[1]))
+
+    return seconds
+
+def reverseString(a_string):
+    result = []
+    for char in str(a_string):
+        result.append(char)
+    result.reverse()
+    return list_to_string(result)
+
+def stripString(string, separator=','):
+    """ 
+        Input
+        -----
+        delimited string
+        separator value
+        
+        Output ret_val[0, 1, 2]
+        -------------
+        0: Location of the separator
+        1: 0th character up to the character preceding the separator
+        2: Remainder of the string
+    """
+
+    ret_val = [0, '', '']
+    ret_val[0] = inString(string, separator)
+#    print('separator =', separator_location)
+    if ret_val[0] == -1:                      #--> No more delimiters!
+        if len(string) > 0:
+            ret_val[1] = reverseString(string)
+            ret_val[2] = None
+#        print("string is " + string + " in stripString")
+#        ret_val = [separator_location, string, None]    
+    elif ret_val[0] == 0:                     #-----------------------------------------------> Oops 
+        pass
+    else:
+        ret_val[1] = reverseString(string[:ret_val[0]])
+        string = string[ret_val[0]:]
+        if len(string) > len(separator):
+            ret_val[2] = (string[len(separator):])
+        else:                                            #--> Done - ended on a delimiter!
+            ret_val[2] = (None)
+#    print(ret_val)    
+    return ret_val
+
+def testTime():
+        tests = []
+        def test(string):
+            result = parseTime(string)
+            print("Input   = " + string)
+            if isNumeric(str(result)):
+                print("Total   = " + format_number(str(result), 2, 1))
+            else: print(result)
+            if isNumeric(str(result)):
+                print("Time    = " + format_number(str(result/60/60), 2, 1), '\n')
+            else: print()
+       
+        clear_screen()
+        tests.append('3:3:3')
+        tests.append('3')
+        tests.append('10:30:30')
+        tests.append('100:450:70000')
+        tests.append('26:19:26:0')
+        tests.append('.5:.5:.5:.5')
+        tests.append('Fred')
+        tests.append('Ethyl:.5')
+        tests.append('Ricky:.5:.5')
+        tests.append('Lucy:.5:.5:.5')
+        tests.append('')
+
+        for aTest in tests:
+            test(aTest)
+
 if __name__ == '__main__':
-    pass
+    from sys import argv
+    myArgs = getopts(argv)
+    for process in myArgs:
+        if process == '-time':
+                testTime()
+
+
+#    clear_screen(); print('No tests selected')
+#    testTime()

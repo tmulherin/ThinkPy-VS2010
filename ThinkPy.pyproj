@@ -27,7 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Distance\display.py" />
+    <Compile Include="Distance\parse_time.py" />
     <Compile Include="Distance\utilities.py" />
+    <Compile Include="Distance\round.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Distance\" />
