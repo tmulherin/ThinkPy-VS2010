@@ -116,8 +116,16 @@ def isFloat(value):
         return False
 
 def isNumeric(value):
+    aString = str(value)
+    theNum = aString.split('.')
+    
+    try:
+        aString = str(int(theNum[0]))
+        for char in theNum[1:]:
+            aString += ('.' + char)
+    except:
+        pass
 
-    aString = str(value) #-> Just in case...
     if isInt(aString) or isFloat(aString):
         return True
     else: return False

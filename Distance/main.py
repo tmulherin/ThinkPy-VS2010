@@ -19,7 +19,7 @@ prompt_distance = "How far? "
 prompt_rate = "How fast? "
 prompt_time = "How long ([ddd.d]:[hhh.h]:[mmm.m]:sss.s)? "
 prompt_info = "--> "
-prompt_cont = "\nPress any key to contimue"
+prompt_cont = "\nPress any key to continue"
 
 distance = 0.0
 rate = 0.0
@@ -86,7 +86,7 @@ def get_solution_type():
 
     return 0
 
-def get_time():
+def get_time(solution_type):
     while 1:
         time_string = input(prompt_info + prompt_time)
         if len(time_string) > 0:
@@ -97,7 +97,10 @@ def get_time():
                 myErr = seconds      
         else:
             myErr = "You need to enter some time." 
-        input(prompt_cont)
+        if len(myErr) > 0:
+            print(myErr)
+            input(prompt_cont)
+            display.pop_screen(solution_type, result_set)
            
 '''
     output_line[0] = distance
@@ -105,7 +108,7 @@ def get_time():
 '''  
 def solution_for_distance():
 
-    result_set[-1][1] = get_time()
+    result_set[-1][1] = get_time('d')
     display.pop_screen('d', result_set)
 
     result_set[-1][0] = get_rate() * result_set[-1][1]/60/60 
@@ -115,7 +118,7 @@ def solution_for_rate():
     result_set[-1][0] = get_distance()
     display.pop_screen('r', result_set)
     
-    result_set[-1][1] = get_time()
+    result_set[-1][1] = get_time('r')
     
 def solution_for_time():
 

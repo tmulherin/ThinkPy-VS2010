@@ -85,7 +85,6 @@ def parseTime(time_string, sep = ':'):
     return seconds
     
 if __name__ == '__main__':
-    tests = []
     def test(string):
         result = parseTime(string)
         print("Input   = " + string)
@@ -96,18 +95,16 @@ if __name__ == '__main__':
             print("Time    = " + utilities.format_number(str(result/60/60), 2, 1), '\n')
         else: print()
        
-    utilities.clear_screen()
-    tests.append('3:3:3')
-    tests.append('3')
-    tests.append('10:30:30')
-    tests.append('100:450:70000')
-    tests.append('26:19:26:0')
-    tests.append('.5:.5:.5:.5')
-    tests.append('Fred')
-    tests.append('Ethyl:.5')
-    tests.append('Ricky:.5:.5')
-    tests.append('Lucy:.5:.5:.5')
-    tests.append('')
-
-    for aTest in tests:
-        test(aTest)
+    utilities.clearScreen()
+    test('3:3:3')
+    test('3')
+    test('10:30:30')
+    test('100:450:70000')
+    test('26:19:26:0')
+    test('05:05')
+    test('.5:.5:.5:.5')
+    test('Fred')
+    test('Ethyl:.5')
+    test('Ricky:.5:.5')
+    test('Lucy:.5:.5:.5')
+    test('')
