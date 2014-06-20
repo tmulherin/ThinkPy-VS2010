@@ -25,7 +25,6 @@ distance = 0.0
 rate = 0.0
 time = 0.0
 
-new_values = ['?', '?']
 result_set = []
 
 def dummyProc(something):
@@ -40,7 +39,7 @@ def get_distance():
         else:
             print("You must enter a valid distance.  Press any key to continue.")
     
-def get_rate():
+def get_rate(solution_type):
     got_rate = 0
 
     while not got_rate:
@@ -49,10 +48,13 @@ def get_rate():
             if utilities.isNumeric(rate):
                 return float(rate)
             else:
-                print(rate + " is not a valid rate of speed.  Press any key to continue.")
-                rate = input()
+                myErr = rate + " is not a valid rate of speed."
         else:
-            print("You must enter a valid number")
+            myErr = "You must enter a valid number"
+        if len(myErr) > 0:
+            print(myErr)
+            input(prompt_cont)
+            display.pop_screen(solution_type, result_set)   
 
 def get_solution_type():
 
@@ -60,19 +62,16 @@ def get_solution_type():
     prompt = "Are you looking for [d]istance, [r]ate or [t]ime? \n  > "
     err_msg = " is not a valid Distance problem.  "
 
-
     fail_msg = "\n\n\n" + " "*30 + "Three strikes you're out!"
     strikes = ['One', 'Two', 'Three']
     while tries < 3:
-        utilities.clearScreen()
         tries += 1
-        for i in range(30): print()
- 
+
         sol = input(prompt)
         if len(sol) > 0:
-            if sol.lower() in("distance", "rate", "time"):
+            if sol.lower() in("distance", "rate", "time", "quit"):
                 return sol[0].lower()
-            elif sol.lower() in("d", "r", "t"):
+            elif sol.lower() in("d", "r", "t", "q"):
                 return sol.lower()
             else:
                 err = "\n" + "'" + sol + "'" + " " + err_msg
@@ -111,35 +110,48 @@ def solution_for_distance():
     result_set[-1][1] = get_time('d')
     display.pop_screen('d', result_set)
 
-    result_set[-1][0] = get_rate() * result_set[-1][1]/60/60 
-       
+    result_set[-1][0] = get_rate('d') * result_set[-1][1]/60/60 
+    display.pop_screen('d', result_set)       
+
 def solution_for_rate():
 
     result_set[-1][0] = get_distance()
     display.pop_screen('r', result_set)
     
     result_set[-1][1] = get_time('r')
-    
+    display.pop_screen('r', result_set)   
+
 def solution_for_time():
 
     result_set[-1][0] = get_distance()
     display.pop_screen('t', result_set)
     
-    result_set[-1][1] = distance / get_rate()
-    
+    result_set[-1][1] = (result_set[-1][0] /get_rate('t')) * 60 * 60
+    display.pop_screen('t', result_set)
+
 def main():
-    done = False
-    result_set.append(new_values)
-    sol_type = (get_solution_type())
-    display.pop_screen(sol_type, result_set)
-    if sol_type == "d":
-        solution_for_distance()
-    elif sol_type == "r":
-        solution_for_rate()
-    elif sol_type == "t":
-        solution_for_time()
-    else:
-        quit()
+    # cd __Dev\Python\ThinkPy\Distance
+    utilities.clearScreen()
+    for i in range(54): print()
+    while True:
+ #       result_set.append(['?', '?'])
+ #       print(result_set)
+ #       input()
+        sol_type = (get_solution_type())
+
+        if sol_type == 'q':
+ #           result_set = result_set[:-1]
+            display.pop_screen(sol_type, result_set)
+            quit()
+        result_set.append(['?', '?'])
+        display.pop_screen(sol_type, result_set)
+
+        if sol_type == "d":
+            solution_for_distance()
+        elif sol_type == "r":
+            solution_for_rate()
+        elif sol_type == "t":
+            solution_for_time()
 
     display.pop_screen(sol_type, result_set)
     input(prompt_info)

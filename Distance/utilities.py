@@ -97,19 +97,19 @@ def inString(string, substring):
 
     return -1 # substring not in string
 
-def isInt(value):
+def isFloat(value):
     try:
         aString = str(value)
-        if (type(eval(aString)) is int) is True:
+        if (type(eval(aString)) is float) is True:
             return True
         else: return False
     except:
         return False
 
-def isFloat(value):
+def isInt(value):
     try:
         aString = str(value)
-        if (type(eval(aString)) is float) is True:
+        if (type(eval(aString)) is int) is True:
             return True
         else: return False
     except:

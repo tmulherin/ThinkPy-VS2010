@@ -7,6 +7,8 @@ from datetime import datetime
 
 def rounder(decimals, integer_part, fractional_part):
 
+#    print("decimals =",decimals,'\nint =', integer_part, '\nfract =', fractional_part)
+#    input()
     iPart = int(integer_part)
     fPart = str(fractional_part)
     retval = []
@@ -25,6 +27,7 @@ def rounder(decimals, integer_part, fractional_part):
             fPart += '0' * (decimals - len(fPart))
             done = True
         else:
+#            print(fPart[-1], rnum)
             digit = fPart[-1]
             if int(digit) > rnum:
                 dPart = float('.' + fPart)
