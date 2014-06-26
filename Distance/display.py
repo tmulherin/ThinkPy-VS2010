@@ -27,14 +27,14 @@ lm_data = '         :'
 rm_data = rm_cols # 14 spaces and the ':' 
 
 
-def pop_screen(solution_type, result_set):
+def pop_screen(result_set):
     utilities.clearScreen()
     print()
     print(line_dashed)
 #    print(line_test_head) 
 #    print(line_test_body)
     print(line_blank)
-    print(titles[solution_type])
+    print(titles[result_set[-1][2][0]])
     print(line_blank)
     print(line_dashed)
     print(line_blank)
@@ -47,6 +47,11 @@ def pop_screen(solution_type, result_set):
     # ==> Populate the matrix with the calculated info
     for i in result_set: # result_set is a list of lists...
         counter += 1
+        solution_type = i[2][0]
+        if solution_type == 'q':
+            quit(result_set, distance, total_time, counter -1)
+            return 0
+        
         output_line = lm_data + (' ' * 7 + str(counter))[-8:]
 
         if i[0] != '?':
@@ -71,21 +76,21 @@ def pop_screen(solution_type, result_set):
         
         print(output_line)
 
-    if solution_type == 'q':
-        print(line_blank + '\n' + line_dashed + '\n' + line_blank)
-        print(title_totals + '\n' + title_seps + '\n' + line_blank)
-        output_line = lm_data + (' ' * 7 + str(counter))
-        dist = utilities.format_number(str(distance), 2, 1)
-        output_line += (' ' * (21 - len(dist))) + str(dist)
-        hours = total_time / 60 / 60
-        rate = utilities.format_number(str(distance / hours), 2, 1) # 41 - 44
-        output_line += (' ' * (14 - len(rate))) + rate
-        this_time = utilities.format_number(str(hours), 2, 1)
-        output_line += (' ' * (17 - len(this_time))) + this_time + rm_data        
-        print(output_line)
-        print(line_blank + '\n' + line_dashed)
-    else:
-        for i in range(43-len(result_set)): # <-- fix this to show the totals
-            print(line_blank)
+    for i in range(40-len(result_set)): # <-- fix this to show the totals
+        print(line_blank)
+    print(line_dashed, '\n')
 
-        print(line_dashed, '\n')
+def quit(result_set, distance, total_time, legs):
+#    print(result_set); input()
+    print(line_blank + '\n' + line_dashed + '\n' + line_blank)
+    print(title_totals + '\n' + title_seps + '\n' + line_blank)
+    output_line = lm_data + (' ' * 7 + str(legs))
+    dist = utilities.format_number(str(distance), 2, 1)
+    output_line += (' ' * (21 - len(dist))) + str(dist)
+    hours = total_time / 60 / 60
+    rate = utilities.format_number(str(distance / hours), 2, 1) # 41 - 44
+    output_line += (' ' * (14 - len(rate))) + rate
+    this_time = utilities.format_number(str(hours), 2, 1)
+    output_line += (' ' * (17 - len(this_time))) + this_time + rm_data        
+    print(output_line)
+    print(line_blank + '\n' + line_dashed)
