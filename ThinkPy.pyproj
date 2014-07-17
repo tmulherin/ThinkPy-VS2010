@@ -23,17 +23,21 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Distance\sample_screens\display_initialize.txt" />
+    <Content Include="Distance\sample_screens\display_multi_solutions.txt" />
+    <Content Include="Distance\sample_screens\test.txt" />
     <Content Include="thinkpython.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Distance\display.py" />
-    <Compile Include="Distance\edit.py" />
+    <Compile Include="Distance\editor.py" />
     <Compile Include="Distance\parse_time.py" />
     <Compile Include="Distance\utilities.py" />
     <Compile Include="Distance\round.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Distance\" />
+    <Folder Include="Distance\sample_screens\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

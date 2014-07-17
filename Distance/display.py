@@ -19,15 +19,47 @@ rm_cols = '     :'
 
 pad_cols = ' ' * 8
 
-title_cols =   "         :     Leg             Distance          Rate             Time     :"
-title_totals = "         :     Sum             Distance          Rate             Time     :"
-title_seps =   "         :     ---             --------          ----             ----     :"
+title_cols =   "         :     Leg             Distance            Rate           Time     :"
+title_totals = "         :     Sum             Distance            Rate           Time     :"
+title_seps =   "         :     ---             --------            ----           ----     :"
 
 lm_data = '         :'
 rm_data = rm_cols # 14 spaces and the ':' 
 
+def exit(result_set, distance, total_time, legs):
+#    print(result_set); input()
+    print(line_blank + '\n' + line_dashed + '\n' + line_blank)
+    print(title_totals + '\n' + title_seps + '\n' + line_blank)
+    output_line = lm_data + (' ' * 7 + str(legs))
+    dist = utilities.format_number(str(distance), 2, 1)
+    output_line += (' ' * (21 - len(dist))) + str(dist)
+    hours = total_time / 60 / 60
+    rate = utilities.format_number(str(distance / hours), 2, 1) # 41 - 44
+    output_line += (' ' * (16 - len(rate))) + rate
+    this_time = utilities.format_number(str(hours), 2, 1)
+    output_line += (' ' * (15 - len(this_time))) + this_time + rm_data        
+    print(output_line)
+    print(line_blank + '\n' + line_dashed)
+    quit()
 
-def pop_screen(result_set):
+def pop_screen(context, value = []):
+    if context == 'editing':
+        pop_screen_edit(value)
+    elif context == 'initializing':
+        pop_screen_init()
+    elif context == 'solving':
+        pop_screen_solve(value)
+
+def pop_screen_edit(result_set):
+    pass
+
+def pop_screen_init():
+    myFile = open('sample_screens\\display_initialize.txt', 'r')
+    utilities.clearScreen()
+    for line in myFile:
+        print(line[:-1])
+        
+def pop_screen_solve(result_set):
     utilities.clearScreen()
     print()
     print(line_dashed)
@@ -45,12 +77,10 @@ def pop_screen(result_set):
     total_time = 0.0 # in seconds
     counter = 0
     # ==> Populate the matrix with the calculated info
+    #print(result_set); input
     for i in result_set: # result_set is a list of lists...
         counter += 1
         solution_type = i[2][0]
-        if solution_type == 'q':
-            quit(result_set, distance, total_time, counter -1)
-            return 0
         
         output_line = lm_data + (' ' * 7 + str(counter))[-8:]
 
@@ -66,31 +96,16 @@ def pop_screen(result_set):
             hours = i[1] / 60 / 60
             rate = utilities.format_number(i[0] / hours, 2, 1) # 41 - 44
         else: rate = '?'
-        output_line += (' ' * (14 - len(rate))) + rate
+        output_line += (' ' * (16 - len(rate))) + rate
 
         if i[1] != '?':  # 61 - 63
             this_time = utilities.format_number(i[1]/60/60, 2, 1)
             total_time += i[1] 
         else: this_time = '?'
-        output_line += (' ' * (17 - len(this_time))) + this_time + rm_data
+        output_line += (' ' * (15 - len(this_time))) + this_time + rm_data ####################
         
         print(output_line)
 
-    for i in range(40-len(result_set)): # <-- fix this to show the totals
+    for i in range(42-len(result_set)): # <-- fix this to show the totals
         print(line_blank)
     print(line_dashed, '\n')
-
-def quit(result_set, distance, total_time, legs):
-#    print(result_set); input()
-    print(line_blank + '\n' + line_dashed + '\n' + line_blank)
-    print(title_totals + '\n' + title_seps + '\n' + line_blank)
-    output_line = lm_data + (' ' * 7 + str(legs))
-    dist = utilities.format_number(str(distance), 2, 1)
-    output_line += (' ' * (21 - len(dist))) + str(dist)
-    hours = total_time / 60 / 60
-    rate = utilities.format_number(str(distance / hours), 2, 1) # 41 - 44
-    output_line += (' ' * (14 - len(rate))) + rate
-    this_time = utilities.format_number(str(hours), 2, 1)
-    output_line += (' ' * (17 - len(this_time))) + this_time + rm_data        
-    print(output_line)
-    print(line_blank + '\n' + line_dashed)

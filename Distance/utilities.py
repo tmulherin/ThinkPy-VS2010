@@ -1,11 +1,31 @@
 #!c:\python\python
 
-import round
-import os
-import parse_time
+import round, os #, parse_time
+
+def between(value, rangeStart, rangeEnd):
+#    '''
+#    value: is this in the range?
+#    '''
+    if type(rangeStart) == type(rangeEnd) == type(value):
+        if value >= rangeStart and value <= rangeEnd:
+            return True
+
+    return False
 
 def clearScreen():
     os.system("cls")
+
+def format_time_string(interval):
+    if isFloat(interval):
+        days = int(interval / 24 / 60 / 60)
+        interval = interval - (days * 24 * 60 * 60)
+        hours = int(interval / 60 / 60)
+        interval = interval - (hours * 60 * 60)
+        mins = int(interval / 60)
+        interval = interval - (mins * 60)
+        secs = format_number(interval, 2, 0)
+        return ('interval', '%s:%s:%s:%s' % (days, hours, mins, secs)) 
+    else: ret_val = ('error', ('%s is not a valid time interval' % interval))
 
 def format_number(value, number_of_decimal_places = 0, commas_desired = 0):
 
@@ -41,7 +61,7 @@ def format_number(value, number_of_decimal_places = 0, commas_desired = 0):
         integer_part    = number[:dec_loc]
         fractional_part = number[dec_loc + 1:]
 
-    number = round.rounder(i_dec_places, integer_part, fractional_part)
+    number = round.rounder(integer_part, fractional_part, i_dec_places,)
     integer_part = number[0]
     fractional_part = number[1]
 #------------------------------------------------------------------------ Have to make this reflect integers ------------------------
@@ -63,7 +83,8 @@ def format_number(value, number_of_decimal_places = 0, commas_desired = 0):
             number = integer_part
         else:
             number =  integer_part + '.' + fractional_part
-
+    else:
+        number = integer_part + '.' + fractional_part
     return number    
 
 def getopts(argv):

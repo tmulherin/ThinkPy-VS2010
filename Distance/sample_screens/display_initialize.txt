@@ -1,0 +1,57 @@
+ 
+         :-----------------------------------------------------------------:
+         :                                                                 :
+         :                <<< Distance = Rate X Time >>>                   :
+         :                                                                 :
+         :-----------------------------------------------------------------:
+         :                                                                 :
+         :                 Welcome the Distance Module!                    :
+         :                                                                 :
+         :     This module gives you the ability to solve a distance       :
+         :     problem whether the solution is for a single iteration      :
+         :     or several.                                                 :
+         :                                                                 :
+         :     You are able to solve for any one of the 3 variables in     :
+         :     each iteration.                                             :
+         :                                                                 :
+         :     A running tally is preserved for distance and time so       :
+         :     that in the end an average rate can be determined for       :                                                                 :
+         :     the entire trip.                                            :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :                                                                 :
+         :-----------------------------------------------------------------:
+
+         Please choose an action from below:
+             [s]olve a problem
+             [q]uit
+
