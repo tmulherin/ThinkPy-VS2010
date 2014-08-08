@@ -1,5 +1,5 @@
 #!c:\python\python.exe
-import display as disp, utilities as util 
+import display as disp, utilities as util, start 
 from utilities import format_time_string 
 
 def editRow(row):
@@ -24,27 +24,13 @@ def editRow(row):
     if choice == 'q': return
 
     if choice == '3':
-        input('Fix Time')
+        row[1] = start.get_time()
+        editRow(row)
     elif choice == '2':
-        input('Fix Distance')
+        row[0] = start.get_distance()
+        editRow(row)
     elif choice == '1':
         input('rutwro')
 
-
-
-def getRowToEdit(result_set):
+def deleteRow(rowNumber):
     pass
-
-def testEdit():
-
-    getRowToEdit(result_set)
-if __name__ == '__main__':
-
-
-
-    row = input("Please choose the leg to edit: ")
-    if util.isInt(row):
-        #==> result_set's last list item is '?', '?', 'q', 'quit'
-        print(result_set[int(row) - 1])
-    else:
-        print(row, "is not a valid row")

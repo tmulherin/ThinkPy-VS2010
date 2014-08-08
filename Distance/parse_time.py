@@ -108,3 +108,4 @@ if __name__ == '__main__':
     test('Ricky:.5:.5')
     test('Lucy:.5:.5:.5')
     test('')
+    test('12:0')

@@ -21,6 +21,8 @@ def andOne(fract_to_round, round_hurdle=4):
         if lastDigit + adder > round_hurdle:
                 adder = 1
         else: adder = 0
+
+    if int(rnd) > round_hurdle: adder = 1 
     return adder
 
 def rounder(integer_part, fractional_part, decimals):
@@ -57,7 +59,7 @@ def rounder(integer_part, fractional_part, decimals):
                             
         base = fPart[:decs]
 
-        if __name__ == '__main__': print('\nEntering try: iPart = %d; fPart = %s, decimals = %d, base = %s' % (iPart, fPart, decimals, base))
+        if __name__ == '__main__': print('\nRounding: iPart = %d; fPart = %s, decimals = %d, base = %s' % (iPart, fPart, decimals, base))
 
         adder = andOne(fPart[decs:], rnum)
           
@@ -90,6 +92,7 @@ def rounder(integer_part, fractional_part, decimals):
     return (str(iPart), fPart)
 
 if __name__ == '__main__':
+    utilities.clearScreen(); print('\n\n')
     print("12.25    - 12.25  :", rounder(12, '25', 2))
     print('12.5     - 12.500 :', rounder(12, 5, 3))
     print("12.9999  - 13.00  :", rounder(12, '9999', 2))
@@ -100,5 +103,5 @@ if __name__ == '__main__':
     print("0.034166 -  0.03  :", rounder(0,  '034166', 2)) 
     print("12.99    - 13     :", rounder(12, '99', 0))
     print('2.596    - 2.60   :', rounder(2, 596, 2))
-
+    print('0.099167 - 0.10   :', rounder(0, '099167', 2))
 
